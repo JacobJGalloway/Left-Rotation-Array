@@ -1,10 +1,10 @@
-﻿using System.Runtime.CompilerServices;
+﻿﻿using System.Runtime.CompilerServices;
 
 namespace LeftRotationArray 
 {
     public class Program
     {
-        static string rotateArr(int[] values, int[] rotations)
+        static string RotateArray(int[] values, int[] rotations)
         {
             int[] maxIndex = new int[rotations.Length];
 
@@ -38,7 +38,8 @@ namespace LeftRotationArray
                     temp[values.Length - iterationRotate + i] = values[i];
                 }          
 
-                Console.WriteLine(string.Join(", ", temp));
+                // Can use to validate index manually
+                //Console.WriteLine(string.Join(", ", temp));
                 
                 maxIndex[r] = temp.IndexOf(maxVal);
             }
@@ -48,26 +49,26 @@ namespace LeftRotationArray
 
         static void Main (string[] args)
         {
-            // Take in the values and rotation array as single arguement
-
+            // Take in the values and rotation array as single arguement (ex. [1, 2, 3]; 4 5 2)
             string[] arrayStrings = args.Length == 1 && args[0].Contains(';') ? args[0].Split(';', StringSplitOptions.RemoveEmptyEntries) : args;
-
-            int[][] arrays = arrayStrings
-                .Select(arrStr => arrStr
-                    .Split(',', StringSplitOptions.RemoveEmptyEntries)
-                    .Select(numStr => int.Parse(numStr.Trim()))
-                    .ToArray())
+            if (arrayStrings[0][0] == '[') arrayStrings[0] = arrayStrings[0].Substring(1);
+            if (arrayStrings[0][arrayStrings[0].Length - 1] == ']') arrayStrings[0] = arrayStrings[0].Substring(0,arrayStrings[0].Length - 1);
+                       
+            int[] arr = arrayStrings[0]
+                .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(numStr => int.Parse(numStr.Trim()))
                 .ToArray();
 
-                int[] arr = arrays[0];
-                int[] rot = arrays[1];
+            int[] rot = arrayStrings[1]
+                .Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                .Select(rotStr => int.Parse(rotStr.Trim()))
+                .ToArray();
 
-                Console.WriteLine(rotateArr(arr, rot));
+                Console.WriteLine(RotateArray(arr, rot));
                 return;        
         }
     }
 }
-
 
 
 
